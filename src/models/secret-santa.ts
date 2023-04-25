@@ -68,12 +68,13 @@ export class SecretSanta {
         let currentNode = startingNode;
         while(currentNode) {
             console.log(currentNode);
-            const link = this._links.find(item => item.hasNode(currentNode) && !item.isMarked());
+            const link = this._links.find(item => item.hasNode(currentNode) && !item.isMarked() && !this._distribution.includes(item.getOtherNode(currentNode)));
             if(link) {
                 this._distribution.push(currentNode);
                 currentNode = link.getOtherNode(currentNode);
                 link.mark();
             } else {
+                this._distribution.push(currentNode);
                 currentNode = null;
             }
         }
