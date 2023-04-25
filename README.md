@@ -6,16 +6,6 @@
 
 ## Development server
 
-Run `nx serve secret-santa` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Understand this workspace
-
-Run `nx graph` to see a diagram of the dependencies of the projects.
-
-## Remote caching
-
-Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and make CI faster.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+Run `npm start` for a dev server.
+You can make request using curl with following request :
+`curl -X POST http://localhost:3000 -d '{"people": ["Max", "Julie", "Vincent"], "couples": []}' -H 'Content-Type: application/json'`
