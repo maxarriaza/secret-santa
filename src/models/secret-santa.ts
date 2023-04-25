@@ -2,20 +2,34 @@ type SecretSantaNode = string;
 
 class SecretSantaLink {
     private _nodes: Array<SecretSantaNode>;
+    private _marked: boolean;
 
     constructor(nodeOne: SecretSantaNode, nodeTwo: SecretSantaNode) {
         this._nodes = [nodeOne, nodeTwo];
+        this._marked = false;
     }
 
-    hasNode(node: string) {
+    hasNode(node: SecretSantaNode) {
         return this._nodes.includes(node);
+    }
+
+    getOtherNode(node: SecretSantaNode) {
+        return this._nodes.filter(item => item !== node)[0];
+    }
+
+    isMarked() {
+        return this._marked;
+    }
+
+    mark() {
+        this._marked = true;
     }
 }
 
 export class SecretSanta {
     private _nodes: Array<SecretSantaNode> = [];
     private _links: Array<SecretSantaLink> = [];
-    private _distribution: Array<[SecretSantaNode, SecretSantaNode]> = [];
+    private _distribution: Array<SecretSantaNode> = [];
 
     // Method to build secret santa from people and couples
     static Build(people: Array<string>, couples: Array<[string, string]>) {
@@ -50,8 +64,24 @@ export class SecretSanta {
         if(!isValid) throw new Error('Configuration not valid for a secret santa');
     }
 
-    execute(): Array<[string, string]> {
+    private _buildDistribution(startingNode: SecretSantaNode) {
+        let currentNode = startingNode;
+        while(currentNode) {
+            console.log(currentNode);
+            const link = this._links.find(item => item.hasNode(currentNode) && !item.isMarked());
+            if(link) {
+                this._distribution.push(currentNode);
+                currentNode = link.getOtherNode(currentNode);
+                link.mark();
+            } else {
+                currentNode = null;
+            }
+        }
+    }
+
+    execute(): Array<SecretSantaNode> {
         this._checkValidity();
-        return [];
+        this._buildDistribution(this._nodes[0]);
+        return this._distribution;
     }
 }

@@ -11,4 +11,9 @@ describe('Secret Santa', () => {
         const test = SecretSanta.Build(["Max", "Alex", "Zina"], [["Max", "Zina"]]);
         expect(() => test.execute()).toThrow();
     });
+
+    test('when three people and no couple should return a distribution', () => {
+        const test = SecretSanta.Build(["Max", "Alex", "Zina"], []);
+        expect(test.execute()).toEqual(["Max", "Alex", "Zina"]);
+    });
 });
