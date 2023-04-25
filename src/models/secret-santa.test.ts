@@ -7,7 +7,7 @@ describe('Secret Santa', () => {
         expect(() => test.execute()).toThrow();
     });
 
-    test('when three people and one couple should throw an error', () => {
+    test('when three people and one couple should return a distribution', () => {
         const test = SecretSanta.Build(["Max", "Alex", "Zina"], [["Max", "Zina"]]);
         expect(() => test.execute()).toThrow();
     });

@@ -2,11 +2,9 @@ type SecretSantaNode = string;
 
 class SecretSantaLink {
     private _nodes: Array<SecretSantaNode>;
-    private _marked: boolean;
 
     constructor(nodeOne: SecretSantaNode, nodeTwo: SecretSantaNode) {
         this._nodes = [nodeOne, nodeTwo];
-        this._marked = false;
     }
 
     hasNode(node: SecretSantaNode) {
@@ -15,14 +13,6 @@ class SecretSantaLink {
 
     getOtherNode(node: SecretSantaNode) {
         return this._nodes.filter(item => item !== node)[0];
-    }
-
-    isMarked() {
-        return this._marked;
-    }
-
-    mark() {
-        this._marked = true;
     }
 }
 
@@ -67,11 +57,10 @@ export class SecretSanta {
     private _buildDistribution(startingNode: SecretSantaNode) {
         let currentNode = startingNode;
         while(currentNode) {
-            const link = this._links.find(item => item.hasNode(currentNode) && !item.isMarked() && !this._distribution.includes(item.getOtherNode(currentNode)));
+            const link = this._links.find(item => item.hasNode(currentNode) && !this._distribution.includes(item.getOtherNode(currentNode)));
             if(link) {
                 this._distribution.push(currentNode);
                 currentNode = link.getOtherNode(currentNode);
-                link.mark();
             } else {
                 this._distribution.push(currentNode);
                 currentNode = null;
