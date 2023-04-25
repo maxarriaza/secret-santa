@@ -21,4 +21,9 @@ describe('Secret Santa', () => {
         const test = SecretSanta.Build(["Max", "Alex", "Zina", "Julie"], []);
         expect(test.execute()).toEqual(["Max", "Alex", "Zina", "Julie"]);
     });
+
+    test('when four people and one couple should return a distribution', () => {
+        const test = SecretSanta.Build(["Alex", "Max", "Zina", "Julie"], [["Max", "Zina"]]);
+        expect(test.execute()).toEqual(["Alex", "Max", "Julie", "Zina"]);
+    });
 });
